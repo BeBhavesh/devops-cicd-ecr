@@ -31,7 +31,7 @@ jobs:
       - name: Build, Tag, Push Image 📦
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: hello-devops-app
+          ECR_REPOSITORY: terraform-ecs-ecr-repo
           IMAGE_TAG: latest
         run: |
           cd app
