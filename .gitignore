@@ -1,0 +1,14 @@
+# Ignore Terraform files
+.terraform/
+
+# Ignore node_modules (if you’re using Node.js)
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore Dockerfiles
+Dockerfile
+
+# Ignore environment variable files (Optional)
+.env
