@@ -44,5 +44,5 @@ jobs:
         with:
           task-definition: infra/task-def.json
           service: hello-devops-service
-          cluster: hello-devops-cluster
+          cluster: terraform-ecs-ecr-cluster
           wait-for-service-stability: true
