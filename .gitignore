@@ -1,18 +1,14 @@
 # Ignore Terraform files
 .terraform/
 
-# Ignore node_modules (if you’re using Node.js)
+# Ignore Terraform provider files
+infra/.terraform/
+
+# Ignore Node modules (if you’re using Node.js)
 node_modules/
-
-# Ignore log files
-*.log
-
-# Ignore Dockerfiles
-Dockerfile
 
 # Ignore environment variable files (Optional)
 .env
 
-# Ignore terraform provider files
-infra/.terraform/providers/
-
+# Ignore logs
+*.log
