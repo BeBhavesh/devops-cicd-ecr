@@ -1,1 +1,0 @@
-# devops-cicd-proj-ecr
