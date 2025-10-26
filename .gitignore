@@ -12,3 +12,7 @@ Dockerfile
 
 # Ignore environment variable files (Optional)
 .env
+
+# Ignore terraform provider files
+infra/.terraform/providers/
+
