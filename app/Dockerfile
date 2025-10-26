@@ -1,28 +1,14 @@
-# Stage 1: Build the app and install dependencies
-FROM node:18-alpine AS build
+# Use a lightweight Node.js base image
+FROM node:18-alpine
 
+# Set working directory inside container
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
-
-# Install all dependencies, including dev dependencies (for the build stage)
-RUN npm install
-
-# Copy the rest of the app
+# Copy application code to container
 COPY . .
 
-# Stage 2: Create the production image (No npm install here)
-FROM node:18-alpine AS production
-
-WORKDIR /usr/src/app
-
-COPY --from=build /usr/src/app /usr/src/app
-
-# Install only production dependencies
-RUN npm ci --only=production
-
-# Expose port for ECS health checks / ALB
+# Expose the port your app is running on (e.g., 3000 for Express.js)
 EXPOSE 3000
 
-# Run the application
+# Run the application (replace index.js with your main file)
 CMD ["node", "index.js"]
