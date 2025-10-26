@@ -1,0 +1,48 @@
+name: CI/CD to ECS 🚀
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout code
+      - name: Checkout code 🧩
+        uses: actions/checkout@v4
+
+      # 2️⃣ Configure AWS Credentials
+      - name: Configure AWS Credentials 🔑
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # 3️⃣ Login to Amazon ECR
+      - name: Login to Amazon ECR 🐳
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # 4️⃣ Build, Tag and Push Docker image
+      - name: Build, Tag, Push Image 📦
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: hello-devops-app
+          IMAGE_TAG: latest
+        run: |
+          cd app
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      # 5️⃣ Deploy to ECS
+      - name: Deploy to ECS 🚀
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: infra/task-def.json
+          service: hello-devops-service
+          cluster: hello-devops-cluster
+          wait-for-service-stability: true
